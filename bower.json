@@ -1,0 +1,20 @@
+{
+  "name": "raspi-livestream",
+  "version": "0.0.0",
+  "authors": [
+    "Vincenzo Merolla <vincenzomerolla@aol.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.14",
+    "ng-flow": "~2.6.0",
+    "ng-file-upload": "~3.0.7"
+  }
+}

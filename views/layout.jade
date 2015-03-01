@@ -1,0 +1,12 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css')
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900' rel='stylesheet' type='text/css'>
+    link(rel='stylesheet', href='/styles/style.css')
+  body.container(ng-app='vid2gif', flow-prevent-drop)
+    block content
+    script(src='bower_components/angular/angular.min.js')
+    script(src='bower_components/ng-flow/dist/ng-flow-standalone.min.js')
+    script(src='scripts/app.js')

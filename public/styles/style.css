@@ -1,0 +1,22 @@
+body {
+  font: 14px "Raleway", Helvetica, Arial, sans-serif;
+}
+
+
+h1 {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.drop {
+  padding: 15px;
+  border: 2px #f1f1f1 dashed;
+  border-radius: 5px;
+  line-height: 34px;
+}
+
+.drop.drag-enter {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border: 2px #d6e9c6 solid;
+}
+
