@@ -9,8 +9,6 @@ var gify = require('gify')
 
 var streamifier = require('streamifier');
 
-var flow = require('../helpers/flow.js')('tmp');
-
 var TEMP_DIR = './tmp/'
 var UPLOAD_DIR = './uploads/';
 
@@ -25,53 +23,37 @@ var config = {
   //inMemory: true
 };
 
-router.get('/download', function(req, res, next) {
-  console.log(req.query)
-  var file = req.query.file;
+
+function removeExtension(filename){
+  var lastDotPosition = filename.lastIndexOf('.');
+  if (lastDotPosition === -1) return filename;
+  return filename.substr(0, lastDotPosition);
+} 
+
+router.get('/download/:file', function(req, res, next) {
+  var file = req.params.file + '.gif';
   res.download(UPLOAD_DIR + file, function (err) {
     if (err) next(err);
     else console.log('Sent: ', file);
   })
 })
 
-// router.get('/download/:identifier', function(req, res) {
-//   flow.write(req.params.identifier, res);
-// });
 
-
-// Handle status checks on chunks through Flow.js
-// router.get('/upload', function(req, res) {
-//   flow.get(req, function(status, filename, original_filename, identifier) {
-//     if (status == 'found') status = 200;
-//     else status = 404;
-//     res.status(status).send();
-//   });
-// });
-
-
-router.post('/upload', multer(), function(req, res, next) {
+router.post('/upload', multer(config), function(req, res, next) {
   console.log('POST', req.files.file);
-
+  
   var file = req.files.file;
-  var dest = UPLOAD_DIR + file.name.replace(/\.[^/.]+$/, '') + '.gif';
+  file.name = removeExtension(file.name);
+  var dest = UPLOAD_DIR + file.name + '.gif';
 
-  // //var gif = fs.createWriteStream(file.path.replace(/\.[^/.]+$/, '') + '.gif');
-  // //var readableStream = streamifier.createReadStream(file.buffer);
+  // var gif = fs.createWriteStream(file.path.replace(/\.[^/.]+$/, '') + '.gif');
+  // var readableStream = streamifier.createReadStream(file.buffer);
 
-  // //gifify(readableStream, {}).pipe(gif);
+  //gifify(readableStream, {}).pipe(res);
   gify(file.path, dest, function (err) {
     if (err) next(err);
-
-    // res.download(dest, path.basename(dest), function (err) {
-    //   if (err) next(err);
-    //   else console.log('Sent: ', dest, res);
-    // });
-    res.send(path.basename(dest));
+    res.send(file.name);
   })
-  // flow.post(req, function(status, filename, original_filename, identifier) {
-  //   console.log('POST', status, original_filename, identifier);
-  //   res.status(status).send();
-  // });
 
 });
 
